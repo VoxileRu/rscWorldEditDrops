@@ -1,0 +1,20 @@
+name: ${project.artifactId}
+main: ${project.groupId}.${project.artifactId}.Plugin
+version: ${project.version}
+author: SimSonic
+website: http://www.voxile.ru
+depend:
+  - WorldEdit
+commands:
+  /drop:
+    description: Drops all blocks in current selection
+    usage: /<command> do what?
+permissions:
+  rscwed.drop:
+    description: Access to //drop command
+  rscwed.admin:
+    description: Access to all functions
+    default: op
+    children:
+      rscwed.drop: true
+ 
