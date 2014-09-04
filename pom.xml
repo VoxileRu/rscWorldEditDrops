@@ -4,7 +4,7 @@
 
 	<groupId>ru.simsonic</groupId>
 	<artifactId>rscWorldEditDrops</artifactId>
-	<version>0.1.1b</version>
+	<version>0.2b</version>
 	<packaging>jar</packaging>
 
 	<name>rscWorldEditDrops</name>
@@ -76,7 +76,7 @@
 		</repository>
 		<repository>
 			<id>voxile.ru</id>
-			<url>http://ci.voxile.ru/plugin/repository/everything/</url>
+			<url>http://s9.voxile.ru/plugin/repository/everything/</url>
 		</repository>
 		<repository>
 			<id>sk89q-repo</id>

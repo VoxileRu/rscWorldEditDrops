@@ -7,11 +7,11 @@ import java.util.logging.Logger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.MetricsLite;
@@ -22,6 +22,7 @@ public final class Plugin extends JavaPlugin
 {
 	public  static final Logger consoleLog = Logger.getLogger("Minecraft");
 	private static final String chatPrefix = "{_DS}[rscWorldEditDrops] {_LS}";
+	private static final int granulation = 10;
 	private MetricsLite metrics = null;
 	@Override
 	public void onLoad()
@@ -130,20 +131,20 @@ public final class Plugin extends JavaPlugin
 									{
 										final Location target = plane.clone().add(x, 0, z);
 										final Block block = target.getBlock();
+										if(block.getState() instanceof InventoryHolder)
+										{
+											final Inventory inventory = ((InventoryHolder)block).getInventory();
+											for(ItemStack is : inventory.getContents())
+												target.getWorld().dropItem(target, is);
+										}
 										switch(block.getType())
 										{
 											case AIR:
-												continue;
 											case WATER:
 											case STATIONARY_WATER:
 											case LAVA:
 											case STATIONARY_LAVA:
 												continue;
-											case CHEST:
-											case TRAPPED_CHEST:
-												for(ItemStack is : ((Chest)block).getBlockInventory().getContents())
-													target.getWorld().dropItem(target, is);
-												// TO DO
 											default:
 												target.getWorld().dropItem(target, new ItemStack(block.getType()));
 												block.setType(Material.AIR);
@@ -151,9 +152,9 @@ public final class Plugin extends JavaPlugin
 										}
 									}
 							}
-						}, 20 * y);
+						}, granulation * y);
 					}
-					throw new CommandAnswerException("{_LG}Operation will be finished in ~" + (yLen / 20) + " seconds");
+					throw new CommandAnswerException("{_LG}Operation will be finished in ~" + (yLen / granulation) + " seconds");
 				} else
 					throw new CommandAnswerException("{_LR}WorldEdit selection is empty.");
 			} else
