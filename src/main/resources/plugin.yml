@@ -9,6 +9,9 @@ commands:
   /drop:
     description: Drops all blocks in current selection
     usage: /<command> do what?
+  rscwed:
+    description: plugin command hub
+    usage: /<command> do what?
 permissions:
   rscwed.drop:
     description: Access to //drop command

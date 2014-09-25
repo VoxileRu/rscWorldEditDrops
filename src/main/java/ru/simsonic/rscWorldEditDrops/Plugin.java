@@ -5,14 +5,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.MetricsLite;
 import ru.simsonic.utilities.CommandAnswerException;
@@ -57,7 +52,7 @@ public final class Plugin extends JavaPlugin
 		{
 			switch(label.toLowerCase())
 			{
-				case "<template command>":
+				case "rscwed":
 					processCommandHub(sender, args);
 					break;
 				case "/drop":
@@ -89,16 +84,17 @@ public final class Plugin extends JavaPlugin
 					reloadConfig();
 					getPluginLoader().disablePlugin(this);
 					getPluginLoader().enablePlugin(this);
-					getServer().getConsoleSender().sendMessage("[rscWorldEditDrops] rscWorldEditDrops has been reloaded.");
+					throw new CommandAnswerException("Done.");
 				}
-				throw new CommandAnswerException("Not enough permissions.");
+				throw new CommandAnswerException("{_LR}Not enough permissions.");
 			case "help":
 			default:
 				throw new CommandAnswerException(new String[]
 				{
 					"Usage:",
-					"{GOLD}/rscwed help",
-					"{GOLD}//drop — drop all blocks in your current WE selection.",
+					"{GOLD}//drop {_LS}— drop all blocks in your current WE selection.",
+					"{GOLD}/rscwed help {_LS}— show this help.",
+					"{GOLD}/rscwed reload {_LS}— disable and enable plugin again.",
 				});
 		}
 	}
@@ -120,7 +116,7 @@ public final class Plugin extends JavaPlugin
 					final int zLen = pos2.getBlockZ() - pos1.getBlockZ() + 1;
 					for(int y = 0; y < yLen; y += 1)
 					{
-						final Location plane = pos1.clone().add(0, y, 0);
+						final Location startLoc = pos1.clone().add(0, y, 0);
 						getServer().getScheduler().runTaskLater(pluginWE, new Runnable()
 						{
 							@Override
@@ -128,29 +124,7 @@ public final class Plugin extends JavaPlugin
 							{
 								for(int z = 0; z < zLen; z += 1)
 									for(int x = 0; x < xLen; x += 1)
-									{
-										final Location target = plane.clone().add(x, 0, z);
-										final Block block = target.getBlock();
-										if(block.getState() instanceof InventoryHolder)
-										{
-											final Inventory inventory = ((InventoryHolder)block).getInventory();
-											for(ItemStack is : inventory.getContents())
-												target.getWorld().dropItem(target, is);
-										}
-										switch(block.getType())
-										{
-											case AIR:
-											case WATER:
-											case STATIONARY_WATER:
-											case LAVA:
-											case STATIONARY_LAVA:
-												continue;
-											default:
-												target.getWorld().dropItem(target, new ItemStack(block.getType()));
-												block.setType(Material.AIR);
-												break;
-										}
-									}
+										startLoc.clone().add(x, 0, z).getBlock().breakNaturally();
 							}
 						}, granulation * y);
 					}
