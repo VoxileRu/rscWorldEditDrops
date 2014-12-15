@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,9 +14,9 @@ import org.mcstats.MetricsLite;
 import ru.simsonic.utilities.CommandAnswerException;
 import ru.simsonic.utilities.LanguageUtility;
 
-public final class Plugin extends JavaPlugin
+public final class BukkitPluginMain extends JavaPlugin
 {
-	public  static final Logger consoleLog = Logger.getLogger("Minecraft");
+	public  static final Logger consoleLog = Bukkit.getLogger();
 	private static final String chatPrefix = "{_DS}[rscWorldEditDrops] {_LS}";
 	private static final int granulation = 10;
 	private MetricsLite metrics = null;
