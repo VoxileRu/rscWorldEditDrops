@@ -1,10 +1,11 @@
-name: ${project.artifactId}
-main: ${project.groupId}.${project.artifactId}.BukkitPluginMain
+name:    ${project.artifactId}
+main:    ${project.groupId}.${project.artifactId}.Main
 version: ${project.version}
-author: SimSonic
-website: https://github.com/SimSonic/rscWorldEditDrops/
+author:  SimSonic
+website: https://github.com/VoxileRu/rscWorldEditDrops/
 depend:
   - WorldEdit
+
 commands:
   /drop:
     description: Drops all blocks in current selection
@@ -12,6 +13,7 @@ commands:
   rscwed:
     description: plugin command hub
     usage: /<command> do what?
+
 permissions:
   rscwed.drop:
     description: Access to //drop command
