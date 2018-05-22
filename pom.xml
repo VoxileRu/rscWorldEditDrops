@@ -14,6 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <spigot-version>1.12.2-R0.1-SNAPSHOT</spigot-version>
+        <spigot-build>1.12.2-R0.1-SNAPSHOT-b1637</spigot-build>
     </properties>
 
     <repositories>
@@ -31,7 +34,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>${spigot-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -42,8 +45,29 @@
         </dependency>
     </dependencies>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>yivemirror-maven-plugin-repo</id>
+            <url>https://simsonic.github.io/yivemirror-maven-plugin/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <build>
         <finalName>${project.artifactId}_v${project.version}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>ru.simsonic.minecraft</groupId>
+                <artifactId>yivemirror-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <serverType>spigot</serverType>
+                    <serverVersion>${spigot-build}</serverVersion>
+                    <directory>server</directory>
+                    <resources>server-resources</resources>
+                </configuration>
+            </plugin>
+        </plugins>
 
         <resources>
             <resource>
