@@ -16,7 +16,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spigot-api-version>1.12.2-R0.1-SNAPSHOT</spigot-api-version>
-        <server-core-build>1.12.2-b1427</server-core-build>
+        <server-core-build>latest</server-core-build>
     </properties>
 
     <repositories>
@@ -59,7 +59,7 @@
             <plugin>
                 <groupId>ru.simsonic.minecraft</groupId>
                 <artifactId>yivemirror-maven-plugin</artifactId>
-                <version>1.1-SNAPSHOT</version>
+                <version>1.2-SNAPSHOT</version>
                 <configuration>
                     <serverType>paper_spigot</serverType>
                     <serverVersion>${server-core-build}</serverVersion>
